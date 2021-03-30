@@ -11,5 +11,26 @@
         {{ question.content }} <br>
         {{ question.create_date }}
     </div>
+    <hr>
+
+    <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+    <div>
+        <ul>
+{#        {% for answer in question.answer_set.all %}#}
+{#            <p style="text-align: left">#}
+{#            <li>답변 : {{ answer.content }} <br>#}
+{#            작성시간 : {{ answer.create_date }}#}
+{#            </li></p>#}
+        {% for answer in question.answer_set.all %}
+            <li>답변 : {{ answer.content }} </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post">
+        {% csrf_token %}
+        <textarea name="cont" id="content" rows="15"></textarea>
+        <input type="submit" value="답변 등록">
+    </form>
 </body>
+
 </html>
