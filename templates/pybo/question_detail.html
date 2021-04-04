@@ -29,6 +29,8 @@
     <form action="{% url 'pybo:answer_create' question.id %}" method="post">
         {% csrf_token %}
         <textarea name="cont" id="content" rows="15"></textarea>
+{#        <textarea name="cont" id="content" cols="50" rows="5"></textarea> #}
+{#        <br>#}
         <input type="submit" value="답변 등록">
     </form>
 </body>
