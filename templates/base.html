@@ -10,7 +10,12 @@
     <title>Title</title>
 </head>
 <body>
+{## include 해당 위치에 다른 문서의 내용을 삽입시킴#}
+{% include "navbar.html" %}
 {% block content %}
 {% endblock %}
+
+<script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'bootstrap.min.js' %}"></script>
 </body>
 </html>
