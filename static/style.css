@@ -1,0 +1,12 @@
+textarea {
+    /*폭*/
+    width: 100%;
+    /*background-color: black;*/
+    /*color : pink;*/
+    font-size: 15px;
+}
+
+input[type=submit] {
+    /*바깥쪽의 여분*/
+    margin-top: 10px;
+}
