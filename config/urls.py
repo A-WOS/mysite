@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('pybo/', include('pybo.urls')),
     path('common/', include('common.urls')),
+    path('product/', include('product.urls')),
     path('', views.index, name='index'),  # '/' 에 해당되는 path
 ]

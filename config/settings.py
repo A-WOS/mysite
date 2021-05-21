@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'common.apps.CommonConfig',
+    # custom settings
+    'django.contrib.humanize',
+    'product.apps.ProductConfig',
 ]
 
 MIDDLEWARE = [

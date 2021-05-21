@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1>상품</h1>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <form method="POST" action="/order/create/">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {% ifequal field.name 'quantity' %}
+                    <label for="{{field.id_for_label}}">{{field.label}}</label>
+                    <input type="{{field.field.widget.input_type}}" class="form-control" id="{{field.id_for_label}}"
+                        placeholder="{{field.label}}" name="{{field.name}}"/>
+                    {% endifequal %}
+                    {% ifequal field.name 'product' %}
+                    <input type="{{field.field.widget.input_type}}" class="form-control" id="{{field.id_for_label}}"
+                        placeholder="{{field.label}}" name="{{field.name}}" value="{{product.id}}" />
+                    {% endifequal %}
+                </div>
+                {% if field.errors %}
+                <span style="color:red">{{field.errors}}</span>
+                {% endif %}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">구매</button>
+            </form>
+        </li>
+        <li class="list-group-item">가격 : {{product.price|intcomma}}</li>
+        <li class="list-group-item">설명 : {{product.description|safe}}</li>
+        <li class="list-group-item">재고 : {{product.stock}}</li>
+        <li class="list-group-item">등록 시간 : {{product.reg_date|date:'Y-m-d H:i'}}</li>
+    </ul>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="/product/">목록 보기</a>
+    </div>
+</div>
+{% endblock %}
