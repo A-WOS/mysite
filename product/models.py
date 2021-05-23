@@ -8,12 +8,11 @@ class Product(models.Model):
     stock = models.IntegerField()
     image = models.ImageField(upload_to="product", blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        db_table = "products"
+        db_table = "product"
         verbose_name = "상품"
         verbose_name_plural = "상품"

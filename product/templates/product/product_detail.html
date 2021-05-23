@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<h1>{{ product.name }}</h1>
+
+<div>
+    <h2>설명 : </h2>{{ product.description }} <br>
+    <h2>가격 : </h2>{{ product.price }} <br>
+    <h2>재고 : </h2>{{ product.stock }} <br>
+{#    {{ product.image }} <br>#}
+    <img src="/static/media/product/Iphone_12_pro.jpg" alt="iphone12pro"><br>
+{#    <img src="{% static '/media/product/Iphone_12_pro.jpg'%}><br>#}
+
+</div>
+
+
+{% endblock %}

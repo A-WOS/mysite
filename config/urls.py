@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+import product.views
 from pybo import views
 
 urlpatterns = [

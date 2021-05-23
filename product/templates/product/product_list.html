@@ -1,0 +1,135 @@
+{#{% if product_list %}#}
+{#    <ul>#}
+{#        {% for product in product_list %}#}
+{#            <li><a href="/shop/{{ product.id }}/">#}
+{#            <li><a href="{% url 'detail' product_id %}/">#}
+{#            <li><a href="{% url 'shop:detail' product_id %}/">#}
+{#                {{ product.name }}#}
+{#                {{ product.description }}#}
+{#                {{ product.price }}#}
+{#                {{ product.stock }}#}
+{#                {{ product.img }}#}
+{#            </a></li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#{% else %}#}
+{#    <p>상품이 없습니다.</p>#}
+{#{% endif %}#}
+{% extends 'base.html' %}
+{% load product_filter %}
+{% block content %}
+{% load static %}
+<div class="row mt-5">
+    <div class="col-12" style="text-align: center">
+        <h3> 상품목록 </h3>
+    </div>
+</div>
+<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+{#{% if product_list %}#}
+{#    <ul>#}
+{#        {% for product in product_list %}#}
+{#            <li><a href="/shop/{{ product.id }}/">#}
+{#            <li><a href="{% url 'detail' product_id %}/">#}
+{#            <div class="row mt-5">#}
+{#                <div class="col-12">#}
+{#                    <li><a href="{% url 'product:detail' product.id %}/">#}
+{#                        {{ product.name }}#}
+      {#                {{ product.description }}#}
+      {#                {{ product.price }}#}
+      {#                {{ product.stock }}#}
+      {#                {{ product.img }}#}
+{#                    </a></li>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#{% else %}#}
+{#    <div class="row mt-5">#}
+{#        <div class="col-12">#}
+{#            <a>상품이 없습니다.</a>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endif %}#}
+{#    -----------------------------------------#}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th style="width:50%">상품명</th>
+            <th>가격</th>
+            <th>재고</th>
+            <th>등록일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if product_list %}
+        {% for product in product_list %}
+        <tr class="text-center">
+{#        forloop for문이 돌아갈때마다 번호 하나씩을 올려줌.     #}
+{#            <td>{{ forloop.counter }}</td>#}
+            <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
+            <td>{{ product_list.paginator.count|sub2:product_list.start_index|sub2:forloop.counter0|add:1 }}</td>
+            <td class="text-left">
+                <a href="{% url 'product:detail' product.id %}">{{ product.name }}</a>
+{#                {% if question.answer_set.count > 0 %}#}
+{#                <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>#}
+{#                {% endif %}#}
+            </td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.created }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">상품이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if question_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ product_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in product_list.paginator.page_range %}
+        {% if page_number >= product_list.number|add:-5 and page_number <= product_list.number|add:5 %}
+            {% if page_number == product_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if product_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ product_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+{#    <a href="{% url 'product:register' %}" class="btn btn-primary">상품 등록하기</a>#}
+    {# TODO 상품 구매버튼은 일반 사용자에게만, 상품 등록 버튼은 관리자만 #}
+    <a class="btn btn-primary" style="float:right">상품 등록하기</a>
+    <a class="btn btn-primary" style="float:left">상품 구매하기</a>
+
+</div>
+{% endblock %}
