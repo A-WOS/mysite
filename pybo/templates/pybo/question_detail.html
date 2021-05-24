@@ -89,6 +89,7 @@
             </div>
         {% endif %}
         <!-- 오류표시 End -->
+        <!-- 로그인이 안되어있다면 답변등록 못함-->
         <div class="form-group">
 {#            <textarea name="content" id="content" class="form-control" rows="10"></textarea>#}
             <textarea {% if not user.is_authenticated %}disabled{% endif %}
