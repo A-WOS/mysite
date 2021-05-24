@@ -9,7 +9,7 @@ from product.models import Product
 
 def index(request):
     """
-    shop 목록 출력
+    product 목록 출력
     """
     page = request.GET.get('page', '1')
     product_list = Product.objects.order_by('-created')
@@ -23,7 +23,7 @@ def index(request):
 
 def detail(request, product_id):
     """
-    shop 내용 출력
+    product 내용 출력
     """
     # product = Product.objects.get(id=product_id)
     # Product.objects.get(id=product_id)
