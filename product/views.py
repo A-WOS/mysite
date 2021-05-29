@@ -30,7 +30,7 @@ def detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     context = {'product': product}
 
-    return render(request, 'product/product_detail.html', context)
+    return render(request, 'product/product_detail2.html', context)
 
 
 # @method_decorator(admin_required, name='dispatch')
