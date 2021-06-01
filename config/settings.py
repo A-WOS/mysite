@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # custom settings
     'django.contrib.humanize',
     'product.apps.ProductConfig',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
