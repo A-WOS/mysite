@@ -1,22 +1,6 @@
-{#{% if product_list %}#}
-{#    <ul>#}
-{#        {% for product in product_list %}#}
-{#            <li><a href="/shop/{{ product.id }}/">#}
-{#            <li><a href="{% url 'detail' product_id %}/">#}
-{#            <li><a href="{% url 'shop:detail' product_id %}/">#}
-{#                {{ product.name }}#}
-{#                {{ product.description }}#}
-{#                {{ product.price }}#}
-{#                {{ product.stock }}#}
-{#                {{ product.img }}#}
-{#            </a></li>#}
-{#        {% endfor %}#}
-{#    </ul>#}
-{#{% else %}#}
-{#    <p>상품이 없습니다.</p>#}
-{#{% endif %}#}
 {% extends 'base.html' %}
 {% load product_filter %}
+{% load humanize %}
 {% block content %}
 {% load static %}
 <div class="row mt-5">
@@ -25,32 +9,6 @@
     </div>
 </div>
 <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
-{#{% if product_list %}#}
-{#    <ul>#}
-{#        {% for product in product_list %}#}
-{#            <li><a href="/shop/{{ product.id }}/">#}
-{#            <li><a href="{% url 'detail' product_id %}/">#}
-{#            <div class="row mt-5">#}
-{#                <div class="col-12">#}
-{#                    <li><a href="{% url 'product:detail' product.id %}/">#}
-{#                        {{ product.name }}#}
-      {#                {{ product.description }}#}
-      {#                {{ product.price }}#}
-      {#                {{ product.stock }}#}
-      {#                {{ product.img }}#}
-{#                    </a></li>#}
-{#                </div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </ul>#}
-{#{% else %}#}
-{#    <div class="row mt-5">#}
-{#        <div class="col-12">#}
-{#            <a>상품이 없습니다.</a>#}
-{#        </div>#}
-{#    </div>#}
-{#{% endif %}#}
-{#    -----------------------------------------#}
 <div class="container my-3">
     <table class="table">
         <thead>
@@ -66,19 +24,13 @@
         {% if product_list %}
         {% for product in product_list %}
         <tr class="text-center">
-{#        forloop for문이 돌아갈때마다 번호 하나씩을 올려줌.     #}
-{#            <td>{{ forloop.counter }}</td>#}
-            <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
             <td>{{ product_list.paginator.count|sub2:product_list.start_index|sub2:forloop.counter0|add:1 }}</td>
             <td class="text-left">
                 <a href="{% url 'product:detail' product.id %}">{{ product.name }}</a>
-{#                {% if question.answer_set.count > 0 %}#}
-{#                <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>#}
-{#                {% endif %}#}
             </td>
-            <td>{{ product.price }}</td>
+            <td>{{ product.price|intcomma }}원</td>
             <td>{{ product.stock }}</td>
-            <td>{{ product.created }}</td>
+            <td>{{ product.created | date:'Y-m-d H:i'}}</td>
         </tr>
         {% endfor %}
         {% else %}
