@@ -86,8 +86,8 @@
 
 {#    <a class="btn btn-primary btn-lg {% if not user.is_authenticated %}disabled{% endif %}" style="float:right">상품 등록하기</a>#}
     {# 일단은 로그인하지 않은 사용자들에게는 구매, 등록 버튼이 보이지 않음 #}
-    {# TODO 상품 구매버튼은 일반 사용자에게만, 상품 등록 버튼은 관리자만 그러기 위해선 custom user model 생성#}
-    {% if user.is_authenticated %}
+
+    {% if user.is_authenticated and user.is_staff %}
         <a class="btn btn-primary" href="#" style="float:right">상품 등록하기</a>
 {#        <a class="btn btn-primary" href="#" style="float:left">상품 구매하기</a>#}
     {% endif %}
