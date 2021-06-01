@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 
@@ -33,24 +34,38 @@ def detail(request, product_id):
     return render(request, 'product/product_detail2.html', context)
 
 
-# @method_decorator(admin_required, name='dispatch')
-# @method_decorator(name='dispatch')
-# class ProductRegister(FormView):
-#     template_name = "product/register.html"
-#     form_class = RegisterForm
-#     success_url = '/product/'
-#
-#     def form_valid(self, form):
-#         product = Product(
-#             name=form.data.get('name'),
-#             price=form.data.get('price'),
-#             description=form.data.get('description'),
-#             stock = form.data.get('stock')
-#         )
-#         product.save()
-#         return super().form_valid(form)
-
 class ProductCreate(FormView):
     template_name = 'product/product_register.html'
     form_class = RegisterForm
     success_url = '/product/'
+
+
+@login_required(login_url='common:login')
+def product_delete(request, product_id):
+    """
+    product 삭제
+    """
+    product = get_object_or_404(Product, pk=product_id)
+    product.delete()
+    return redirect('product:index')
+
+
+# @login_required(login_url='common:login')
+# def product_modify(request, product_id):
+#     """
+#     product 수정
+#     """
+#     product = get_object_or_404(Product, pk=product_id)
+#     if request.method == "POST":
+#
+#         form = RegisterForm(request.POST)
+#         if form.is_valid():
+#             answer = form.save(commit=False)
+#             answer.author = request.user
+#             answer.modify_date = timezone.now()
+#             answer.save()
+#             return redirect('pybo:detail', question_id=answer.question.id)
+#     else:
+#         form = AnswerForm(instance=answer)
+#     context = {'answer': answer, 'form': form}
+#     return render(request, 'pybo/answer_form.html', context)

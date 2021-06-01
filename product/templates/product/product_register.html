@@ -5,9 +5,9 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 {% endblock %}
 {% block content %}
-    <div class="row mt-5">
+    <div class="row mt-3">
         <div class="col-12 text-center">
-            <h1>상품 생성하기</h1>
+            <h1>상품 등록</h1>
         </div>
     </div>
     <div class="row mt-5">
@@ -28,18 +28,24 @@
                             {% ifequal field.name 'description' %}
                                 <textarea class="form-control" name="{{ field.name }}"
                                           id="{{ field.id_for_label }}"></textarea>
-                                <script>
-                                    $(document).ready(function () {
-                                        $('#id_description').summernote({
-                                            {#$('summernote').summernote({#}
-                                            height: 300
-                                        });
-                                    });
-                                </script>
                             {% else %}
-                                <input type="{{ field.field.widget.input_type }}" class="form-control"
-                                       id="{{ field.id_for_label }}"
-                                       placeholder="{{ field.label }}" name="{{ field.name }}"/>
+                                {% ifequal field.name 'image' %}
+                                    <textarea class="form-control" name="{{ field.name }}"
+                                              id="{{ field.id_for_label }}"></textarea>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $('#id_image').summernote({
+                                                {#$('summernote').summernote({#}
+                                                height: 150
+                                            });
+                                        });
+                                    </script>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type }}" class="form-control"
+                                           id="{{ field.id_for_label }}"
+                                           placeholder="{{ field.label }}" name="{{ field.name }}"/>
+                                {% endifequal %}
+
                             {% endifequal %}
                         </div>
                         {% if field.errors %}

@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
-
+    {% load static %}
+    {% load humanize %}
 
     <div class="container">
-        <br>  <h2><p class="text-center">상품</p></h2>
+        <br>
+        <h2><p class="text-center">상품</p></h2>
         <hr>
 
 
@@ -15,7 +16,9 @@
                         <div class="img-big-wrap">
                             {#  <div> <a href="#"><img src="/static/media/product/Iphone_12_pro.jpg" alt="iphone12pro"></a></div>#}
                             {#  <div><img src="/static/media/product/Iphone_12_pro.jpg" alt="iphone12pro" width="250" height="300"/></div>#}
-                            <div><img src="/static/{{ product.image.path }}" width="250" height="300" alt="{{ product.name }}"/></div>
+                            {#                            summernote 적용전 쓰던거#}
+                            {#                            <div><img src="/static/{{ product.image.path }}" width="250" height="300" alt="{{ product.name }}"/></div>#}
+                            <div><p>{{ product.image|safe }}</p></div>
                         </div>
                     </article> <!-- gallery-wrap .end// -->
                 </aside>
@@ -30,7 +33,7 @@
                         </dl>
                         <p class="price-detail-wrap">
 	                        <span class="price h3 text-warning">
-	                        	<span class="num">{{ product.price }}</span><span class="currency"> 원</span>
+	                        	<span class="num">{{ product.price|intcomma }}</span><span class="currency"> 원</span>
 	                        </span>
                         </p> <!-- price-detail-wrap .// -->
                         <dl class="item-property">
@@ -49,9 +52,16 @@
                             <dt>배송</dt>
                             <dd>코로나 시국이라 택배배송만</dd>
                         </dl>  <!-- item-property-hor .// -->
-                        <a href="#" class="btn btn-lg btn-primary text-uppercase">장바구니</a>
-                        <a href="{% url 'product:index' %}" class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>
-{#                        <a href="{% url 'product:detail' product.id %}">{{ product.name }}</a>#}
+                        {% if user.is_authenticated and not user.is_staff %}
+                            <a href="#" class="btn btn-lg btn-primary text-uppercase">장바구니</a>
+                            <a href="{% url 'product:index' %}"
+                               class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>
+                        {% elif user.is_authenticated and user.is_staff %}
+                            <a href="#" class="btn btn-lg btn-primary text-uppercase">수정</a>
+                            <a href="{% url 'product:product_delete' product.id %}" class="delete btn btn-lg btn-primary text-uppercase">삭제</a>
+                            <a href="{% url 'product:index' %}"
+                               class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>
+                        {% endif %}
                     </article> <!-- card-body.// -->
                 </aside> <!-- col.// -->
             </div> <!-- row.// -->
