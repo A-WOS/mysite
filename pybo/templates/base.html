@@ -8,6 +8,8 @@
     <link rel="stylesheet", type="text/css", href="{% static 'bootstrap.min.css' %}">
     <link rel="stylesheet", type="text/css", href="{% static 'style.css' %}">
     <title>Title</title>
+    {% block header %}
+    {% endblock %}
 </head>
 <body>
 {## include 해당 위치에 다른 문서의 내용을 삽입시킴#}
@@ -17,6 +19,7 @@
 
 <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'bootstrap.min.js' %}"></script>
+<script src="{% static 'popper.min.js' %}"></script>
 <!-- 자바스크립트 Start -->
 {% block script %}
 {% endblock %}

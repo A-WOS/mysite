@@ -49,3 +49,8 @@ def detail(request, product_id):
 #         )
 #         product.save()
 #         return super().form_valid(form)
+
+class ProductCreate(FormView):
+    template_name = 'product/product_register.html'
+    form_class = RegisterForm
+    success_url = '/product/'

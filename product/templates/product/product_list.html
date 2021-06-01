@@ -88,7 +88,7 @@
     {# 일단은 로그인하지 않은 사용자들에게는 구매, 등록 버튼이 보이지 않음 #}
 
     {% if user.is_authenticated and user.is_staff %}
-        <a class="btn btn-primary" href="#" style="float:right">상품 등록하기</a>
+        <a class="btn btn-primary" href="{% url 'product:register' %}" style="float:right">상품 등록하기</a>
 {#        <a class="btn btn-primary" href="#" style="float:left">상품 구매하기</a>#}
     {% endif %}
 
