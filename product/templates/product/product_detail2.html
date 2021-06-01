@@ -57,7 +57,8 @@
                             <a href="{% url 'product:index' %}"
                                class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>
                         {% elif user.is_authenticated and user.is_staff %}
-                            <a href="#" class="btn btn-lg btn-primary text-uppercase">수정</a>
+                            <a href="{% url 'product:modify' product.id %}" class="btn btn-lg btn-primary text-uppercase">수정</a>
+{#                            <a href="#" class="btn btn-lg btn-primary text-uppercase">수정</a>#}
                             <a href="{% url 'product:product_delete' product.id %}" class="delete btn btn-lg btn-primary text-uppercase">삭제</a>
                             <a href="{% url 'product:index' %}"
                                class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>

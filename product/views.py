@@ -4,7 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 
-from product.forms import RegisterForm
+# from product.forms import RegisterForm, ProductForm
+from product.forms import ProductForm
 from product.models import Product
 
 
@@ -34,10 +35,51 @@ def detail(request, product_id):
     return render(request, 'product/product_detail2.html', context)
 
 
-class ProductCreate(FormView):
-    template_name = 'product/product_register.html'
-    form_class = RegisterForm
-    success_url = '/product/'
+# class ProductCreate(FormView):
+#     template_name = 'product/product_register.html'
+#     form_class = RegisterForm
+#     success_url = '/product/'
+
+
+# class ProductModify(FormView):
+#     template_name = 'product/product_register.html'
+#     form_class = RegisterForm
+#     success_url = '/product/'
+
+
+@login_required(login_url='common:login')
+def product_create(request):
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.save()
+            return redirect('product:index')
+    else:
+        form = ProductForm()
+    context = {'form': form}
+
+    return render(request, 'product/product_register.html', context)
+
+
+@login_required(login_url='common:login')
+def product_modify(request, product_id):
+    """
+    product 수정
+    """
+    product = get_object_or_404(Product, pk=product_id)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.save()
+            return redirect('product:detail', product_id=product_id)
+    else:
+        form = ProductForm(instance=product)
+    context = {'form': form}
+    return render(request, 'product/product_register.html', context)
 
 
 @login_required(login_url='common:login')
