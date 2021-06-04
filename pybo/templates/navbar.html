@@ -18,14 +18,16 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{% url 'product:index' %}">상품목록</a>
             </li>
-            {% if item_count > 0 %}
-                <li class="nav-item ">
-                    <a class="nav-link" href="{% url 'cart:cart_detail' %}">장바구니({{ item_count }})</a>
-                </li>
-            {% else %}
-                <li class="nav-item ">
-                    <a class="nav-link" href="{% url 'cart:cart_detail' %}">장바구니</a>
-                </li>
+            {% if user.is_authenticated and not user.is_staff %}
+                {% if item_count > 0 %}
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'cart:cart_detail' %}">장바구니({{ item_count }})</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'cart:cart_detail' %}">장바구니</a>
+                    </li>
+                {% endif %}
             {% endif %}
             <li class="nav-item ">
                 <a class="nav-link" href="{% url 'pybo:index' %}">고객센터</a>
