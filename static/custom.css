@@ -1,0 +1,30 @@
+
+.my_customer_table {
+    min-width: 400px;
+    font-size: 14px;
+}
+
+.my_custom_thread {
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    background-color: #f8f9fa !important;
+}
+
+.custom_image {
+    width: 100px;
+    height: 100px;
+}
+
+.custom_a {
+    text-decoration: none;
+}
+
+.custom_icon {
+    text-decoration: none;
+    color: #686868 !important;
+}
+
+.my_custom_button {
+    margin-top: 5px;
+}

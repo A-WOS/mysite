@@ -53,9 +53,7 @@
                             <dd>코로나 시국이라 택배배송만</dd>
                         </dl>  <!-- item-property-hor .// -->
                         {% if user.is_authenticated and not user.is_staff %}
-{#                            <form method = "post" action="{% url '' %} }>#}
-                            <a href="{% url 'order:create' %}" class="btn btn-lg btn-primary text-uppercase">장바구니</a>
-{#                            </form>#}
+                            <a href="{% url 'cart:add_cart' product.id %}" class="btn btn-lg btn-primary text-uppercase">장바구니</a>
                             <a href="{% url 'product:index' %}"
                                class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>
                         {% elif user.is_authenticated and user.is_staff %}
