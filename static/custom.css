@@ -1,4 +1,5 @@
 
+/* cart */
 .my_customer_table {
     min-width: 400px;
     font-size: 14px;
@@ -27,4 +28,25 @@
 
 .my_custom_button {
     margin-top: 5px;
+}
+
+/* payment button */
+.stripe-button-el {
+    width: 100% !important;
+    display: block !important;
+    background-color: deepskyblue !important;
+    border: 0 !important;
+    background-image: none !important;
+}
+
+.stripe-button-el span {
+    display: block;
+    position: relative;
+    padding: 0 12px;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 16px !important;
+    color: white !important;
+    background: none !important;
 }

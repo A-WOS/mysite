@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'django_summernote',
     'cart.apps.CartConfig',
+    'stripe',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.counter',
             ],
             # 'libraries': {
             #     'product_filter': 'product.templatetags.product_filter',
@@ -145,3 +147,7 @@ LOGOUT_REDIRECT_URL = '/'
 # 사진 파일 저장 위치
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+
+# 결제 api(Stripe key) 추가
+STRIPE_PUBLIC_KEY = 'pk_test_51IyZRJDEjpWCI1S71tF7T29T3T28mZRsbL3R1O6CZuNqF1PE2vLtOmgdPtOMO7Yz0nSBNWgJBkLIqDWmcL1QuF1F00RXI1HCS7'
+STRIPE_SECRET_KEY = 'sk_test_51IyZRJDEjpWCI1S7ZLVHavYYJEtlu7PU1LEhjtJpUhPC8BtULJiBUYd0kITU7cSQD6NlUTJz6aBg12VnfoXxaeG500xzJxr5eW'

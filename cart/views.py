@@ -1,8 +1,11 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from cart.models import Cart, CartItem
 from product.models import Product
+
+import stripe
+from django.conf import settings
 
 
 def _cart_id(request):
@@ -24,7 +27,8 @@ def add_cart(request, product_id):
 
     try:
         cart_item = CartItem.objects.get(product=product, cart=cart)
-        cart_item.quantity += 1
+        if cart_item.quantity < cart_item.product.stock:
+            cart_item.quantity += 1
         cart_item.save()
     except CartItem.DoesNotExist:
         cart_item = CartItem.objects.create(
@@ -46,4 +50,30 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
     except ObjectDoesNotExist:
         pass
 
-    return render(request, 'cart/cart.html', dict(cart_items = cart_items, total=total, counter=counter))
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    stripe_total = int(total * 100)
+    description = 'Best SmartPhone Shop - 주문'
+    data_key = settings.STRIPE_PUBLIC_KEY
+
+    return render(request, 'cart/cart.html', dict(cart_items=cart_items, total=total, counter=counter,
+                                                  data_key=data_key, stripe_total=stripe_total, description=description))
+
+
+def cart_remove(request, product_id):
+    cart = Cart.objects.get(cart_id=_cart_id(request))
+    product = get_object_or_404(Product, id=product_id)
+    cart_item = CartItem.objects.get(product=product, cart=cart)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    return redirect('cart:cart_detail')
+
+
+def full_remove(request, product_id):
+    cart = Cart.objects.get(cart_id=_cart_id(request))
+    product = get_object_or_404(Product, id=product_id)
+    cart_item = CartItem.objects.get(product=product, cart=cart)
+    cart_item.delete()
+    return redirect('cart:cart_detail')

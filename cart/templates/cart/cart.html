@@ -21,7 +21,8 @@
     {% else %}
         <div class="container-fluid">
             <div class="text-center">
-                <br><h1 class="text-center my_title">장바구니</h1><br>
+                <br>
+                <h1 class="text-center my_title">장바구니</h1><br>
             </div>
         </div>
         <div class="card">
@@ -58,14 +59,18 @@
                                     <td>
                                         <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_a">
                                             <i class="fas fa-plus-circle custom_icon"></i></a>&nbsp;
-                                        <a href="" class="custom_a"><i class="fas fa-minus-circle custom_icon"></i></a>
-                                        <a href="" class="custom_a"><i class="fas fa-trash-alt custom_icon"></i></a>
+                                        <a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="custom_a"><i
+                                                class="fas fa-minus-circle custom_icon"></i></a>
+                                        <a href="{% url 'cart:full_remove' cart_item.product.id %}" class="custom_a"><i
+                                                class="fas fa-trash-alt custom_icon"></i></a>
                                     </td>
                                 {% else %}
                                     <td>
-                                        &nbsp;<a href="" class="custom_a"><i
+                                        &nbsp;<a href="{% url 'cart:cart_remove' cart_item.product.id %}"
+                                                 class="custom_a"><i
                                             class="fas fa-minus-circle custom_icon"></i></a>&nbsp;
-                                        <a href="" class="custom_a"><i class="fas fa-trash-alt custom_icon"></i></a>
+                                        <a href="{% url 'cart:full_remove' cart_item.product.id %}" class="custom_a"><i
+                                                class="fas fa-trash-alt custom_icon"></i></a>
                                     </td>
                                     <td></td>
                                 {% endif %}
@@ -97,6 +102,21 @@
                         </tbody>
                     </table>
                     <div class="mx-auto">
+                        <form action="" method="POST">
+                            <script
+                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="{{ data_key }}"
+                                    data-image="{% static 'img/logo.JPG' %}"
+                                    data-name="Best SmartPhone Shop"
+                                    data-description={{ description }}
+                                    data-amount="{{ stripe_total }}"
+                                    data-label="결제하기"
+                                    data-currency="krw"
+                                    data-shpping-address="true"
+                                    data-billing-address="true"
+                                    data-zip-code="true">
+                            </script>
+                        </form>
                         <a href="{% url 'product:index' %}" class="btn btn-secondary btn-block my_custom_button">쇼핑
                             계속하기</a>
                     </div>
