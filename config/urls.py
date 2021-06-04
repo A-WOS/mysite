@@ -24,5 +24,6 @@ urlpatterns = [
     path('pybo/', include('pybo.urls')),
     path('common/', include('common.urls')),
     path('product/', include('product.urls')),
+    path('order/', include('order.urls')),
     path('', views.index, name='index'),  # '/' 에 해당되는 path
 ]
