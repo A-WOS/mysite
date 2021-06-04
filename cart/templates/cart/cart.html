@@ -9,24 +9,25 @@
     {#    </div>#}
     {#</div>#}
     {% if not cart_items %}
-        <div class="container-fluid">
+        <div class="container">
             <div class="text-center">
                 <br>
                 <h1 class="text-center my_title">장바구니가 비어있습니다.</h1><br>
                 <p class="text-center">
-                    <a href="{% url 'product:index' %}">쇼핑 계속</a>
+                    <a href="{% url 'product:index' %}">돌아가기</a>
                 </p>
             </div>
         </div>
     {% else %}
-        <div class="container-fluid">
+        <div class="container">
             <div class="text-center">
                 <br>
                 <h1 class="text-center my_title">장바구니</h1><br>
             </div>
         </div>
-        <div class="card">
-            <div class="row">
+{#        <div class="col-10">#}
+        <div class="row-1">
+            <div class="row mx-auto">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
                     <table class="table my_customer_table">
                         <thead class="my_custom_thread">

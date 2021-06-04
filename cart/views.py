@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -8,6 +9,7 @@ import stripe
 from django.conf import settings
 
 
+@login_required(login_url='common:login')
 def _cart_id(request):
     cart = request.session.session_key
     if not cart:
@@ -15,6 +17,7 @@ def _cart_id(request):
     return cart
 
 
+@login_required(login_url='common:login')
 def add_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     try:
@@ -40,6 +43,7 @@ def add_cart(request, product_id):
     return redirect('cart:cart_detail')
 
 
+@login_required(login_url='common:login')
 def cart_detail(request, total=0, counter=0, cart_items=None):
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
@@ -55,10 +59,30 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
     description = 'Best SmartPhone Shop - 주문'
     data_key = settings.STRIPE_PUBLIC_KEY
 
+    if request.method == 'POST':
+        print(request.POST)
+        try:
+            token = request.POST['stripeToken']
+            email = request.POST['stripeEmail']
+            customer = stripe.Customer.create(
+                email=email,
+                source=token
+            )
+            charge = stripe.Charge.create(
+                amount=stripe_total,
+                currency="krw",
+                description=description,
+                customer=customer.id
+            )
+        except stripe.error.CardError as e:
+            return False, e
+
     return render(request, 'cart/cart.html', dict(cart_items=cart_items, total=total, counter=counter,
-                                                  data_key=data_key, stripe_total=stripe_total, description=description))
+                                                  data_key=data_key, stripe_total=stripe_total,
+                                                  description=description))
 
 
+@login_required(login_url='common:login')
 def cart_remove(request, product_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
@@ -71,6 +95,7 @@ def cart_remove(request, product_id):
     return redirect('cart:cart_detail')
 
 
+@login_required(login_url='common:login')
 def full_remove(request, product_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
