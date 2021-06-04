@@ -49,7 +49,9 @@ def detail(request, product_id):
 
 @login_required(login_url='common:login')
 def product_create(request):
-
+    """
+    product 등록
+    """
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
@@ -90,24 +92,3 @@ def product_delete(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
     return redirect('product:index')
-
-
-# @login_required(login_url='common:login')
-# def product_modify(request, product_id):
-#     """
-#     product 수정
-#     """
-#     product = get_object_or_404(Product, pk=product_id)
-#     if request.method == "POST":
-#
-#         form = RegisterForm(request.POST)
-#         if form.is_valid():
-#             answer = form.save(commit=False)
-#             answer.author = request.user
-#             answer.modify_date = timezone.now()
-#             answer.save()
-#             return redirect('pybo:detail', question_id=answer.question.id)
-#     else:
-#         form = AnswerForm(instance=answer)
-#     context = {'answer': answer, 'form': form}
-#     return render(request, 'pybo/answer_form.html', context)
