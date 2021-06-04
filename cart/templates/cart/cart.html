@@ -49,10 +49,10 @@
                                     <br>
                                     <span class="num">가격: {{ cart_item.product.price|intcomma }}원</span>
                                     <br>
-                                    <span class="num">수량: {{ cart_item.quantity }} X {{ cart_item.product.price|intcomma }}원</span>
+                                    <span class="num">수량: {{ cart_item.quantity }} X {{ cart_item.product.price|intcomma }} 원</span>
                                 </td>
                                 <td>
-                                    {{ cart_item.sub_total }}원
+                                    {{ cart_item.sub_total|intcomma }}원
                                 </td>
                                 {% if cart_item.quantity <= cart_item.product.stock %}
                                     <td>
