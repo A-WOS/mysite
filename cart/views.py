@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
@@ -55,10 +57,9 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
         pass
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    stripe_total = int(total * 100)
+    stripe_total = int(total)
     description = 'Best SmartPhone Shop - 주문'
     data_key = settings.STRIPE_PUBLIC_KEY
-
     if request.method == 'POST':
         print(request.POST)
         try:
@@ -76,6 +77,7 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
             )
         except stripe.error.CardError as e:
             return False, e
+        return render(request, 'cart/pay.html', dict(stripe_total=stripe_total, cart_items=cart_items))
 
     return render(request, 'cart/cart.html', dict(cart_items=cart_items, total=total, counter=counter,
                                                   data_key=data_key, stripe_total=stripe_total,
