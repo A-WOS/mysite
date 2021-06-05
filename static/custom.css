@@ -50,3 +50,13 @@
     color: white !important;
     background: none !important;
 }
+
+/* 검색 창 */
+.product_search_text {
+    padding-top: 20px;
+}
+
+
+.my_bottom_margin {
+    margin-bottom: 5%;
+}

@@ -92,3 +92,18 @@ def product_delete(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
     return redirect('product:index')
+
+
+def search(request):
+    products = None
+    keyword = None
+
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        products = Product.objects.all().filter(name__contains=keyword)
+
+    context = {
+        'products': products, 'keyword': keyword,
+    }
+
+    return render(request, 'product/search.html', context)
