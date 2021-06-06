@@ -15,7 +15,7 @@ def index(request):
     """
     page = request.GET.get('page', '1')
     product_list = Product.objects.order_by('-created')
-    paginator = Paginator(product_list, 10)
+    paginator = Paginator(product_list, 6)
     page_obj = paginator.get_page(page)
     context = {'product_list': page_obj}
     # context = {'product_list': product_list}
