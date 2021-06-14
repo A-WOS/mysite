@@ -143,7 +143,7 @@ STATICFILES_DIRS = [
 
 # 로그인/로그아웃 성공후 이동하는 URL
 LOGIN_REDIRECT_URL = '/product'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/product'
 
 # 사진 파일 저장 위치
 # summernote로 인해 쓰진않음
