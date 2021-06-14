@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    {% load humanize %}
+
+    <div class="container">
+        <br>
+        <h2><p class="text-center">상품</p></h2>
+        <hr>
+
+
+        <div class="card">
+            <div class="row">
+                <aside class="col-sm-3 border-right">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            {#  <div> <a href="#"><img src="/static/media/product/Iphone_12_pro.jpg" alt="iphone12pro"></a></div>#}
+                            {#  <div><img src="/static/media/product/Iphone_12_pro.jpg" alt="iphone12pro" width="250" height="300"/></div>#}
+                            {#                            summernote 적용전 쓰던거#}
+                            {#                            <div><img src="/static/{{ product.image.path }}" width="250" height="300" alt="{{ product.name }}"/></div>#}
+                            <div><p>{{ product.image|safe }}</p></div>
+                        </div>
+                    </article> <!-- gallery-wrap .end// -->
+                </aside>
+                <aside class="col-sm-7">
+                    <article class="card-body p-5">
+                        <dl class="item-property">
+                            <dt><h3>상품 이름</h3></dt>
+                        </dl>
+                        <h3 class="title mb-3">{{ product.name }}</h3>
+                        <dl class="item-property">
+                            <dt>가격</dt>
+                        </dl>
+                        <p class="price-detail-wrap">
+	                        <span class="price h3 text-warning">
+	                        	<span class="num">{{ product.price|intcomma }}</span><span class="currency"> 원</span>
+	                        </span>
+                        </p> <!-- price-detail-wrap .// -->
+                        <dl class="item-property">
+                            <dt>스펙</dt>
+                            <dd><p>{{ product.description }}</p></dd>
+                        </dl>
+                        {#<dl class="param param-feature">#}
+                        {#  <dt>모델 번호</dt>#}
+                        {#  <dd>{{ product.id }}</dd>#}
+                        {#</dl>  <!-- item-property-hor .// -->#}
+                        <dl class="param param-feature">
+                            <dt>재고</dt>
+                            <dd>{{ product.stock }}</dd>
+                        </dl>  <!-- item-property-hor .// -->
+                        <dl class="param param-feature">
+                            <dt>배송</dt>
+                            <dd>코로나 시국이라 택배배송만</dd>
+                        </dl>  <!-- item-property-hor .// -->
+                        {% if user.is_authenticated and not user.is_staff %}
+                            <a href="{% url 'cart:add_cart' product.id %}" class="btn btn-lg btn-primary text-uppercase">장바구니</a>
+                            <a href="{% url 'product:index' %}"
+                               class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>
+                        {% elif user.is_authenticated and user.is_staff %}
+                            <a href="{% url 'product:modify' product.id %}" class="btn btn-lg btn-primary text-uppercase">수정</a>
+{#                            <a href="#" class="btn btn-lg btn-primary text-uppercase">수정</a>#}
+                            <a href="{% url 'product:product_delete' product.id %}" class="delete btn btn-lg btn-primary text-uppercase">삭제</a>
+                            <a href="{% url 'product:index' %}"
+                               class="btn btn-lg btn-outline-primary text-uppercase">돌아가기</a>
+                        {% endif %}
+                    </article> <!-- card-body.// -->
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+
+
+    </div>
+    <!--container.//-->
+
+
+    <br><br>
+    <article class="bg-secondary mb-0">
+        <div class="card-body text-center">
+            <br><br>
+            <h4 class="text-white">Best SmartPhone Shop<br></h4>
+            <p class="h5 text-white">@CopyRight by AWOS</p>
+        </div>
+    </article>
+{% endblock %}

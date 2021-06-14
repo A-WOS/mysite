@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load humanize %}
+    <div>
+        <p class="text-center product_search_text">검색 결과 : <b>"{{ keyword }}"</b></p>
+    </div>
+    <div class="container">
+        <div class="row mx-auto">
+            {% for product in products %}
+                <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+                    <div class="card text-center" style="min-width: 18rem;">
+                        <a href="{{ product.id }}"><p class="card-img-top my_image">{{ product.image|safe }}</p>
+                        </a>
+                        <div class="card-body">
+                            <h4>{{ product.name }}</h4>
+                            <p>{{ product.price|intcomma }}원</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="row mx-auto">
+                    <p class="text-center product_search_text">검색 결과 없음</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
