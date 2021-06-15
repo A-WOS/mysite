@@ -95,6 +95,9 @@ def product_delete(request, product_id):
 
 
 def search(request):
+    """
+    product 검색
+    """
     products = None
     keyword = None
 

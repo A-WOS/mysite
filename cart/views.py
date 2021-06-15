@@ -21,6 +21,9 @@ def _cart_id(request):
 
 @login_required(login_url='common:login')
 def add_cart(request, product_id):
+    """
+    cart 한개씩 추가
+    """
     product = Product.objects.get(id=product_id)
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
@@ -86,6 +89,9 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
 
 @login_required(login_url='common:login')
 def cart_remove(request, product_id):
+    """
+    cart 한개씩 삭제
+    """
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
     cart_item = CartItem.objects.get(product=product, cart=cart)
@@ -99,6 +105,9 @@ def cart_remove(request, product_id):
 
 @login_required(login_url='common:login')
 def full_remove(request, product_id):
+    """
+    cart 전체 삭제
+    """
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
     cart_item = CartItem.objects.get(product=product, cart=cart)
