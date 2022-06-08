@@ -25,11 +25,11 @@
                     {% for field in form %}
                         <div class="form-group">
                             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {% ifequal field.name 'description' %}
+                            {% if field.name == 'description' %}
                                 <textarea class="form-control" name="{{ field.name }}"
                                           id="{{ field.id_for_label }}">{{ field.value|default_if_none:'' }}</textarea>
                             {% else %}
-                                {% ifequal field.name 'image' %}
+                                {% if field.name == 'image' %}
                                     <textarea class="form-control" name="{{ field.name }}"
                                               id="{{ field.id_for_label }}">{{ field.value|default_if_none:'' }}</textarea>
                                     <script>
@@ -43,10 +43,11 @@
                                 {% else %}
                                     <input type="{{ field.field.widget.input_type }}" class="form-control"
                                            id="{{ field.id_for_label }}"
-                                           placeholder="{{ field.label }}" name="{{ field.name }}" value="{{ field.value|default_if_none:'' }}"/>
-                                {% endifequal %}
+                                           placeholder="{{ field.label }}" name="{{ field.name }}"
+                                           value="{{ field.value|default_if_none:'' }}"/>
+                                {% endif %}
 
-                            {% endifequal %}
+                            {% endif %}
                         </div>
                         {% if field.errors %}
                             <span style="color: red">{{ field.errors }}</span>
